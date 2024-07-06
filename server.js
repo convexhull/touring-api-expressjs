@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+
 dotenv.config({ path: './config.env' });
 
 const app = require('./app');
@@ -12,8 +13,7 @@ const DB_URI = process.env.DATABASE.replace(
 // BEST METHOD for connection. Using IIFE with async-await
 (async () => {
   try {
-    const conn = await mongoose.connect(DB_URI);
-    console.log(conn);
+    await mongoose.connect(DB_URI);
     console.log('DB connection successful');
   } catch (e) {
     console.log(e.message);
@@ -21,11 +21,11 @@ const DB_URI = process.env.DATABASE.replace(
 })();
 
 // Second BEST METHOD using async-await and .then/.catch on async() promise
+
 // async function connectDb() {
 //   const conn = await mongoose.connect(DB_URI);
 //   return conn;
 // }
-
 // connectDb()
 //   .then((conn) => {
 //     console.log(conn);
