@@ -1,0 +1,5 @@
+services:
+  natours-backend:
+    build: .
+    ports:
+      - 5000:5000
