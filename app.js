@@ -13,6 +13,7 @@ const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
 
+
 // 1) GLOBAL MIDDLEWARES
 
 // Set security HTTP headers
