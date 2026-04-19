@@ -1,18 +1,26 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const multer = require('multer');
 const AppError = require('./utils/appError');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const globalErrorHandler = require('./controllers/errorController');
 
+const upload = multer();
 const app = express();
 
+app.use(
+  cors({
+    origin: '*',
+  }),
+);
 // 1) GLOBAL MIDDLEWARES
 
 // Set security HTTP headers
@@ -31,6 +39,11 @@ const limiter = rateLimit({
 
 app.get('/ping', (req, res) => {
   res.json({ message: 'pong' });
+});
+
+app.post('/api/upload', upload.single('file'), (req, res) => {
+  console.log('Received file:', req.file);
+  res.json({ done: true });
 });
 
 app.use('/api', limiter);
